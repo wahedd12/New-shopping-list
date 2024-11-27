@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt")
-const nodemailer = require("nodemailer")
+const {transporter} = require("../util/mailTransporter")
 const dotenv = require("dotenv")
 const User = require("../model/User")
 const saltRounds = 10
@@ -32,13 +32,6 @@ let createUser = async (req, res)=>{
     }
 }
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: "lmipo861@gmail.com",
-        pass: process.env.MAIL_PASSWORD
-    },
-})
 
 let sendVerificationEmail = async (user) => {
 const verificationLink = `http://localhost:3000/user/verifyUser?token=${user.verificationToken}`
